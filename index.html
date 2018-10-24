@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <title>My first three.js app</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+        }
+
+        canvas {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/97/three.min.js"></script>
+    <script>
+        document.addEventListener("keydown", function (event) {
+            console.log(event.which);
+        })
+
+
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var geometry = new THREE.BoxGeometry(1, 1, 1);
+        // var material = new THREE.MeshBasicMaterial({ color: 'red' });
+        // var cube = new THREE.Mesh(geometry, material);
+
+        var edges = new THREE.EdgesGeometry(geometry);
+        var line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 'white' }));
+        
+        scene.add(line);
+        // scene.add();
+
+        camera.position.z = 5;
+
+
+        function animate() {
+            requestAnimationFrame(animate);
+            document.addEventListener("keydown", function (event) {
+                if (event.which == 38 || event.which == 87) {
+                    line.rotation.x += 0.001;
+                }
+                if (event.which == 40 || event.which == 83) {
+                    line.rotation.x -= 0.001;
+                }
+                if (event.which == 39 || event.which == 68) {
+                    line.rotation.y += 0.001;
+                }
+                if (event.which == 37 || event.which == 65) {
+                    line.rotation.y -= 0.001;
+                }
+            })
+
+            line.rotation.x += 0.01;
+            line.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+    
+</body>
+
+</html>
